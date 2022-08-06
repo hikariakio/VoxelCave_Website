@@ -1,0 +1,100 @@
+{%extends 'base.html'%}
+
+{%block main%}
+
+<div class="container-fluid">
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-12"><img class="detail-image" src="{{url_for('static',filename='img/cardList/'+model.image)}}"
+                width="100%" height="100%"></div>
+    </div>
+    <div class="row"
+        style="background: #f2f2f2ee;border-width: 3px;border-color: black;border-radius: 5px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+        <div class="col-sm-12 col-md-6">
+            <div class="d-sm-flex d-md-flex d-lg-inline d-xl-inline">
+                <h3 style="margin-bottom: 0px;width: 100%;margin-top: 7px;">{{model.name}} &nbsp;</h3>
+                <div class="d-flex align-items-end"><span>by</span><span
+                        style="color: rgba(122,122,122,0.89);">&nbsp;YeGaung</span></div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="d-flex" style="height: 100%;padding-top: 5px;padding-bottom: 5px;">
+                <div class="d-flex">
+                    {% if model.discountpercent> 0 %}
+
+                    <p class="d-flex flex-column justify-content-center"
+                        style="color: rgb(174,75,75);height: auto;font-size: 28px;margin-bottom: 0px;">{{"$%.2f"|format(model.price * 0.01* (100-model.discountpercent))}}</p>
+                    {%else%}
+                    <p class="d-flex flex-column justify-content-center"
+                        style="color: rgb(75,174,75);height: auto;font-size: 28px;margin-bottom: 0px;">{{"$%.2f"|format(model.price)}}
+                    </p>
+
+                    {%endif%}
+
+                    {% if model.discountpercent > 0 %}
+
+                    <p class="d-flex flex-column justify-content-center"
+                        style="color: rgb(133,129,157);height: auto;margin-bottom: 0px;margin-left: 10px;font-size: 14px;text-decoration: line-through;">
+                       {{"$%.2f"|format(model.price)}}</p>
+                    <p class="d-flex flex-column justify-content-center"
+                        style="color: rgb(253,70,68);height: auto;margin-bottom: 0px;margin-left: 5px;font-size: 10px;">
+                        -{{model.discountpercent}}%</p>
+                    {%endif%}
+
+                </div>
+                <div class="text-right d-flex justify-content-end align-items-center" style="width: 100%;">
+                    <form class="align-items-center" method="POST" action="{{ url_for('main.cart') }}">
+                        <input id="modelID" class="form-control" type="hidden" name="modelID" value="{{model.id}}" />
+                        <button class="btn btn-link" type="submit" style="color: rgb(255,45,45);font-size: 16px;padding: 0px;">
+                            add to cart
+                            <i class="fa fa-cart-plus" style="margin-right: 7px;">
+                            </i>
+                        </button>
+                    </form>
+                </div>
+                </div>
+        </div>
+    </div>
+    <div class="row"
+        style="background: #f2f2f2ee;border-width: 3px;border-color: black;border-top-width: 5px;border-top-style: solid;">
+        <div class="col-12" style="margin-top: 10px;">
+            <h3>Description</h3>
+            <div class="card-rating">
+                {%- for x in range(5)-%}
+                        {%- if model.rating - x > 0 -%}
+                            <span class="fa fa-star checked"></span>
+                        {%-else-%}
+                            <span class="fa fa-star"></span>
+                        {%-endif-%}
+                {%-endfor-%}
+                <span class="review-count">({{model.reviewCount}} reviews)</span></div>
+        </div>
+        <div class="col-sm-12 col-md-6" style="margin-top: 15px;">
+            <p>{{model.description}}
+                    <br>
+                    <br>
+                    FORMAT :&nbsp;
+
+                    {%for x in model.formatList%}
+                    <span style="text-decoration: underline;">
+                    {{x.name|upper}}
+                    </span>                    
+                    {%if loop.index != model.formatList|length%}
+                    &nbsp;
+                    {%endif%}        
+                    {%endfor%}   
+
+                    <br>
+            </p>
+        </div>
+        <div class="col-sm-12 col-md-6" style="margin-top: 15px;">
+            <p><span style="text-decoration: underline;">Category &gt; {{category.name}} </span>
+                <br><br>
+                3D Model License : STANDARD
+                <br><br>
+                Product ID: {{model.id}}
+                <br><br>
+                Have questions? Chat with us now. <a href="#">24/7&nbsp;Live&nbsp;Chat</a><br></p>
+        </div>
+    </div>
+</div>
+{%endblock%}

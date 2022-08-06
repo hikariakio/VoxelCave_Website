@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block main %}
+
+    <section>  
+        <div class="container" style="background: #1b191a;border-top-left-radius: 15px;border-top-right-radius: 15px;margin-top: 25px;">
+            <div class="row">
+                <div class="col-12" style="color: rgb(255,255,255);margin-top: 15px;">
+                    <h1 class="text-center">Checkout</h1>
+<p class="text-center"> Thank you for buying from VoxelCave.<br /><br />Please provide your details so that to finalize your detail and payment information.<br />Order Total : {{"$%.2f"|format(totalcost)}}
+                        <br /><br /></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10 offset-1">
+                    <form style="color: rgb(214,214,214);" method ="POST">
+                        {{form.hidden_tag()}}
+                        <div class="form-row" style="margin-bottom: 25px;">
+                            <div class="col-10 col-sm-6 col-lg-4 col-xl-4 offset-1 offset-sm-0 offset-lg-1 offset-xl-1" style="margin-top:25px;">
+                                
+                                {{form.firstname.label
+                                    (class="form-label")}}
+         
+                                {{form.firstname(
+                                    class="form-control checkout-input",autocomplete="off",required=False)}}                              
+
+                            {% for error in form.firstname.errors %}                            
+                            <div class="checkout-error">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>{{error}}</span>
+                            </div>
+                            {% endfor %}
+                            
+                            </div>
+                            </br>
+                            </br>
+                            </br>
+                            <div class="col-10 col-sm-6 col-lg-4 col-xl-4 offset-1 offset-sm-0 offset-lg-2 offset-xl-2" style="margin-top:25px;">
+                                {{form.lastname.label
+                                    (class="form-label")}}
+         
+                                 {{form.lastname(
+                                     class="form-control checkout-input",autocomplete="off",required=False)}}  
+
+                                {% for error in form.lastname.errors %}                            
+                                <div class="checkout-error">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <span>{{error}}</span>
+                                </div>
+                                {% endfor %}    
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin-bottom: 25px;">
+                            <div class="col-10 col-sm-12 col-lg-10 offset-1 offset-sm-0 offset-lg-1">
+                                {{form.email.label
+                                    (class="form-label")}}
+         
+                                 {{form.email(
+                                     class="form-control checkout-input",autocomplete="off",required=False)}}
+                                     
+                                     {% for error in form.email.errors %}                            
+                                     <div class="checkout-error">
+                                         <i class="fas fa-exclamation-circle"></i>
+                                         <span>{{error}}</span>
+                                     </div>
+                                     {% endfor %}
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin-bottom: 25px;">
+                            <div class="col-10 col-sm-12 col-lg-10 offset-1 offset-sm-0 offset-lg-1">
+                                {{form.phone.label
+                                    (class="form-label")}}
+         
+                                 {{form.phone(
+                                     class="form-control checkout-input",autocomplete="off",required=False)}}
+                                {% for error in form.phone.errors %}                            
+                                <div class="checkout-error">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <span>{{error}}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin-bottom: 25px;">
+                            <div class="col-10 offset-1 d-flex justify-content-center">
+                                {{form.submit(class= "btn btn-primary" ,style="width: 50%;")}}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>         
+        </div>
+    </section>
+{% endblock %}

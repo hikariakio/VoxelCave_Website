@@ -1,0 +1,110 @@
+{%extends 'base.html'%}
+
+{%block main%}
+{% if orderlist.models|length != 0 %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-8">                
+            {% for model in orderlist.models%}
+                <div class="row item-in-cart">
+                    <div class="col-3 col-xl-2" style="padding: 0px;padding-right: 0px;">
+                        <img class="image-in-cart" src="{{url_for('static', filename='img/cardList/'+model.image)}}" width="100%" height="100%" style="padding: 5%; border-right: 1px dashed rgb(27,25,26);" />
+                    </div>
+                    <div class="col-9 col-xl-10" >
+                        <div class="row" style="height: 100%;">
+                            <div class="col-7" style="padding: 0px;">
+                                <a class="title-in-cart"  href= "{{url_for('main.detail', modelID=model.id, modelName = model.name)}}">
+                                    <p style="margin-bottom: 0px; margin-top:10px; margin-left: 10px;color:black">{{model.name}}</p>
+                                </a>
+                                <p class="d-none d-sm-block" style="margin-bottom: 0px;margin-top: 10px;margin-left: 10px;">{{model.description}}</p>
+                                <p style="position: absolute;bottom: 0;left: 0;margin: 0px;margin-bottom: 10px;margin-left: 10px;font-size: 8px;">#{{model.id}} 3D-model-{{model.category}}</p>
+                            </div>
+                            <div class="col-5" style="padding-right: 16px;">                                
+                                {% if model.discountpercent> 0 %}
+                                <p class="mainpriceincart" style="margin-bottom: 0px;text-align: right;margin-top: 5px;color: rgb(174,75,75);">
+                                    {{"$%.2f"|format(model.price * 0.01* (100-model.discountpercent))}}
+                                </p>
+                                <p class="oripriceincart" style="margin-bottom: 0px;text-align: right;text-decoration: line-through;color: rgb(133,129,157);">
+                                    {{"$%.2f"|format(model.price)}}
+                                </p>                                
+                                {%else%}
+                                <p class="mainpriceincart" style="margin-bottom: 0px;text-align: right;margin-top: 5px;color: rgb(30,30,30);">
+                                    {{"$%.2f"|format(model.price)}}
+                                </p>
+                                {%endif%}
+                                <a href="{{url_for('main.deletecartitem',modelID = model.id)}}" 
+                                            style=" position: absolute;bottom: 0;right: 0;text-align: center;
+                                                    margin-bottom: 10px;font-size: 12px;margin-right: 15px;
+                                                    color: rgb(133,129,157);text-decoration: underline;">
+                                                    remove item
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {%endfor%}
+        </div>
+        <div class="col-sm-12 col-md-4" style="margin-top: 15px;">
+            <div style="background: #fbfbfb;border-radius: 12px;margin-left: 5px;margin-right: 5px;padding-bottom: 10px;">
+                <h3 style="border-bottom: 1px solid rgba(157,167,178,0.75);padding-top: 15px;padding-left: 15px;padding-bottom: 15px;margin-bottom: 0px;">Order Summary</h3>
+                <div class="d-flex" style="padding: 15px;padding-bottom: 0px;padding-top: 15pxpx;">
+                    <p style="margin: 0px;">Total:</p>
+                    <p class="flex-grow-1" style="text-align: right;margin: 0px;">
+                        {{"$%.2f"|format(totalprice)}}
+                    </p>
+                </div>
+                <div class="d-flex" style="padding: 15px;padding-bottom: 15px;padding-top: 0px;">
+                    <p style="margin: 0px;color: rgb(174,75,75);">Saved:</p>
+                    <p class="flex-grow-1" style="text-align: right;margin: 0px;color: rgb(174,75,75);">
+                        {{"$%.2f"|format(savedprice)}}
+                    </p>
+                </div>
+                <form action="{{url_for('main.checkout')}}">
+                    <button class="btn btn-dark" type="submit" style="width: 60%;padding-top: 5px;padding-bottom: 5px;margin-left: 20%;margin-right: 20%;margin-bottom: 10px;">
+                        Checkout &gt;&gt;
+                    </button>
+                </form>
+                <button class="btn btn-link d-flex justify-content-center align-items-center" 
+                        type="button" style="   width: 60%;padding-top: 5px;padding-bottom: 5px;margin-left: 20%;margin-right: 20%;
+                                                color: rgb(133,128,157);font-size: 12px;" 
+                                                data-target="#modal-1" data-toggle="modal">
+                                                Remove All Items
+                </button>            
+                <div id="modal-1" class="modal fade" role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">VoxelCave</h4><button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to remove all items?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-dark" type="button" data-dismiss="modal">Cancel</button>
+                                <form action="{{url_for('main.deletecart')}}">
+                                    <button type="submit" class="btn btn-danger" type="button">Remove</button></div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%else%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="row item-in-cart">
+                    <div class="col" style="padding: 0px;padding-right: 0px;padding-bottom: 20px;padding-top: 20px;">
+                        <h4 class="text-center" style="padding-bottom: 20px;">Your shopping cart is empty.</h4>
+                        <form action ="{{url_for('main.index')}}">
+                        <button class="btn btn-dark" type="submit" style="width: 50%;margin-right: 25%;margin-left: 25%;padding-top: 3px;padding-left: 3px;">Browse Models</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endif%}
+{%endblock%}

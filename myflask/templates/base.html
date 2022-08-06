@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>VoxelCave : Voxel Models Collection</title>
+        <link rel="icon"
+              type="image/png"
+              sizes="512x512"
+              href="assets/img/favicon/Favicon.png">
+
+                 <!-- bootstrap -->
+              <!--
+            <link rel="stylesheet" type ="text/css"
+            href="{{ url_for('static',filename='bootstrap/css/bootstrap.min.css') }}">
+            -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <!-- font -->
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Lato&amp;display=swap">
+        <!-- icons -->
+        <link rel="stylesheet" type ="text/css"
+              href="{{ url_for('static',filename='fonts/fontawesome-all.min.css') }}">
+        <link rel="stylesheet" type ="text/css"
+              href="{{ url_for('static',filename='fonts/font-awesome.min.css') }}">
+        <link rel="stylesheet" type ="text/css"
+              href="{{ url_for('static',filename='fonts/typicons.min.css') }}">
+        <!-- footer from here https://www.elegantthemes.com/blog/divi-resources/get-a-free-header-and-footer-for-divis-window-cleaning-layout-pack  -->
+        <link rel="stylesheet" type ="text/css"
+              href="{{ url_for('static',filename='css/Footer-Clean.css') }}">
+        <!-- css -->
+        <link rel="stylesheet" type ="text/css"
+              href="{{ url_for('static',filename='css/style.css') }}">
+
+           
+            
+    </head>
+    <body>
+                
+
+        <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<!--
+        <script src="{{ url_for('static',filename='bootstrap/js/bootstrap.min.js') }}"></script>
+ -->                              
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+        <nav class="navbar navbar-dark navbar-expand-lg"
+             style="background: rgb(27,25,26);">
+            <div class="container-fluid">
+                <div class="navbar-brand" style="margin-left: 10px;">
+                    <a class="navbar-brand" target="_top" href="{{ url_for('main.index') }}">voxelCave</a>
+                </div>
+                <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+                    <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse flex-grow-1 justify-content-start"
+                     id="navcol-1"
+                     style="padding-top: 10px;
+                            padding-bottom: 10px;
+                            width: 100%;">
+                    <ul class="navbar-nav" style="margin-top: 10px;width: 100%;">
+                        <li class="nav-item dropdown d-flex align-items-md-center"
+                            id="dropdown_small"
+                            style="margin-left: 2px;
+                                   width: auto;">
+                            <a class="dropdown-toggle nav-link"
+                               aria-expanded="false"
+                               data-toggle="dropdown"
+                               href="#">Voxel Models&nbsp;</a>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-item">
+                                    <i class="typcn typcn-plane-outline" style="margin-right: 5px;"></i><a class="text-dark" href="#">Airplanes</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <i class="fas fa-hamburger" style="margin-right: 5px;"></i><a class="text-dark" href="#">Food</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <i class="fas fa-dog" style="margin-right: 5px;"></i><a class="text-dark" href="#">Animals</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item d-flex d-md-flex justify-content-start justify-content-sm-start justify-content-md-start align-items-md-start justify-content-lg-end"
+                            id="cartforsmallscreen"
+                            style="width: 100%;
+                                   margin-right: 15px;">
+                            <a class="nav-link"
+                               style="text-align: right;
+                                      color: rgb(255,255,255);
+                                      font-size: 24px;"
+                               href="{{ url_for('main.cart') }}">&nbsp;cart&nbsp;<i class="fa fa-shopping-cart"></i></a>
+                        </li>
+                        <li class="nav-item d-md-flex flex-grow-1 justify-content-md-start justify-content-xl-end align-items-xl-center"
+                            style="width: auto;">
+                            <div class="d-lg-flex justify-content-lg-center align-items-lg-center"
+                                 style="margin-top: 0px;">
+                                <button class="btn btn-primary"
+                                        type="button"
+                                        style="border-radius: 30px;
+                                               background: transparent;
+                                               font-size: 12px;
+                                               width: 70px;
+                                               padding-top: 0px;
+                                               padding-right: 0;
+                                               padding-bottom: 0;
+                                               padding-left: 0;
+                                               height: 30px;
+                                               margin-top: 5px;
+                                               margin-right: 12px;
+                                               border-width: 2px;
+                                               border-color: rgb(255,255,255);">
+                                    LOG
+                                    IN
+                                </button>
+                                <button class="btn btn-primary"
+                                        type="button"
+                                        style="border-radius: 30px;
+                                               background: rgb(101,163,255);
+                                               font-size: 12px;
+                                               width: 70px;
+                                               padding-top: 0px;
+                                               padding-right: 0;
+                                               padding-bottom: 0;
+                                               padding-left: 0;
+                                               height: 30px;
+                                               margin-top: 5px;
+                                               margin-right: 12px;
+                                               border-width: 2px;
+                                               border-color: #65a3ff;">
+                                    SIGN
+                                    UP
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--CREDIT https://madmaraca.art/projects/gJOZQZ -->
+
+    
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-primary" role="alert" >
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}  
+
+        {% block head %}
+        {% endblock %}
+        {% block main %}
+        {% endblock %}
+        <footer class="footer-clean"
+                style="background: rgb(15,14,13);
+                       margin-right: 15px;
+                       margin-left: 15px;
+                       margin-top: 5px;
+                       border-top-left-radius: 10px;
+                       border-top-right-radius: 10px;
+                       color: rgb(255,255,255);">
+            <div class="container-fluid" style="max-width: 680px;">
+                <div class="row justify-content-center">
+                    <div class="col-sm-6 col-md-6 item footer-items">
+                        <h3>About</h3>
+                        <ul>
+                            <li>
+                                <a>Ye Gaung Kyaw</a>
+                            </li>
+                            <li>
+                                <a>n10923543</a>
+                            </li>
+                            <li>
+                                <a>Rapid WebDevelopment</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-6 item social" style="padding-bottom: 0;">
+                        <a href="https://www.youtube.com/channel/UCg3e0tnKDyxW7nDNSYxhB9g"
+                           target="_blank"><i class="fa fa-youtube-play"></i></a><a href="https://www.linkedin.com/in/yegaungkyaw/" target="_blank"><i class="fa fa-linkedin-square"></i></a>
+                        <p class="copyright">voxelCave © 2022</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+    </body>
+</html>

@@ -1,0 +1,217 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<!--CREDIT https://madmaraca.art/projects/gJOZQZ -->
+<div class="jumbotron"
+    style="margin-top: 5px;margin-bottom: 5px;text-shadow: 2px 2px 5px rgb(51,51,51);border-radius: 0px; color: #ffffff; background: url( {{url_for('static',filename='img/jumbotronn/darkhouse.png')}} ) center / cover no-repeat">
+    
+    <h1 style="text-align: center;">Voxel 3D Models</h1>
+    <p style="text-align: center;margin-top: 20px;">3D models for game developers and animators. <br>Files available
+        for download in all majors formats - fbx,obj.</p>
+    <div>
+        <form class="form-inline my-2 my-lg-0 ml-5" action="{{url_for('main.filter',_anchor='modellist')}}">
+        <input autcomplete="off" class="form-control-sm d-block" type="search" id="searchbox"
+            placeholder="Search the best Voxel Collection.."
+            name = "key"
+            style="/*width: 50%;*/margin: auto;background: url(&quot;assets/img/other/searchicon.png&quot;) left / contain no-repeat, rgb(26,24,25);border-radius: 25px;/*height: s50px;*/border-width: 2px;border-color: rgb(119,119,119);color: var(--white);text-align: center;">
+        </form>
+    </div>
+</div>
+{%endblock%}
+
+{%block main%}
+<div class="container-fluid" style="padding-right: 10px;padding-bottom: 0;padding-left: 5px;">
+    <div class="row" style="width: 100%;height: 100%;margin-left: 0px;margin-right: 0px;">
+        <div class="col-sm-12 col-lg-6 d-flex d-sm-flex justify-content-center justify-content-sm-center"
+            style="background: #110f0c;padding-left: 0px;padding-right: 0px;margin-top: 5px;margin-bottom: 5px;">
+            <div class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000" data-keyboard="false"
+                id="carousel-1" style="width: 256px;transform: translate(0px);">
+                <div class="carousel-inner" style="margin-left: 0px;">
+                    <!--CREDIT https://dribbble.com/shots/13080352-Mini-Voxel-Forest -->
+                    <!--CREDIT https://dribbble.com/shots/11497050-Dark/attachments/3116158?mode=media -->
+                    <div class="carousel-item active"><img class="w-100 d-block" src="{{url_for('static',filename='img/carousel/2.png')}}"
+                            alt="Slide Image"></div>
+                    <div class="carousel-item"><img class="w-100 d-block" src="{{url_for('static',filename='img/carousel/1.png')}}"
+                            alt="Slide Image"></div>
+                    <div class="carousel-item"><img class="w-100 d-block" src="{{url_for('static',filename='img/carousel/3.png')}}"
+                            alt="Slide Image" style="background: url(&quot;assets/img/carousel/3.png&quot;);"></div>
+                </div>
+                <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span
+                            class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a
+                        class="carousel-control-next" href="#carousel-1" role="button" data-slide="next"><span
+                            class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a></div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6" style="background: #110f0c;">
+            <div id="summersale">
+                <h2 class="text-center" style="color: #ffffff;">SUMMER KICKOFF SALE!<br></h2>
+                <h2 style="color: #287cff;text-align: center;">SAVE UP TO 50%</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modellist" class="container-fluid" style="padding-right: 10px;padding-bottom: 0px;padding-left: 10px;">
+    <div class="row category-list-row" style="background: transparent;padding-top: 15px;padding-right: 10%;padding-left: 10%;">
+        <div class="col-12 order-3">
+            <ul class="list-unstyled d-flex justify-content-center flex-wrap" style="font-size: 20px;color: rgb(255,255,255);margin: 0px;padding-bottom: 5px;border-width: 0px;border-style: solid;border-bottom-width: 1px;">
+                <li class="cat-element"><a href="{{url_for('main.index', _anchor='modellist')}}">
+                        <h1>ALL</h1>
+                    </a></li>
+                {% for cat in category%}
+    
+                <li class="cat-element">
+                        <a href="{{url_for('main.filter',searchCategory = cat.name,_anchor='modellist')}}">
+                            <h1>{{cat.name}}</h1>
+                        </a>
+                </li>
+
+                {%endfor%}              
+               
+            </ul>
+        </div>
+    </div>
+    <div class="row" style="background: transparent;">
+        <div class="col-12 order-3">
+            <h4 class="text-white" id="voxelmodelsheading-1"
+                style="margin-left: 0px;margin-top: 20px;text-align: center;">{{showText}}</h4>
+        </div>
+    </div>
+    {% if models|length == 0 %}
+
+    <div class="row" style="background: transparent;">
+        <div class="col-12 order-3">
+            <a href="{{ url_for('main.index') }}">
+            <h4 class="text-white" id="voxelmodelsheading-1"
+                style="margin-left: 0px;margin-top: 20px;text-align: center;font-size:16rpx"> &lt;&lt; Back to home</h4>
+             </a>
+        </div>
+    </div>
+    {%endif%}
+    
+    {% if models|length > 0 %}
+    <div class="row" style="background: transparent;">
+        <div class="col-12 order-3">
+            <div class="d-flex justify-content-center align-items-center align-content-center" style="padding-bottom: 15px; padding-top : 5px">
+                <div class="form-check form-check-inline" style="margin-right: 15px;" onClick ="myFunction()">
+                    <input id="discountCheck" class="form-check-input" type="checkbox" {%if discountMode =='true'%} checked {%endif%}/>
+                    <label class="form-check-label" for="discountCheck" style="color: rgb(255,255,255);">Discount Only</label>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" aria-expanded="false" data-toggle="dropdown" type="button" style="padding-top: 0px;padding-bottom: 0px; width : 120px">
+                     {{sortMode}}
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{url_for('main.filter',sort ='name',_anchor='modellist' ,key = request.args.get('key'),searchCategory = request.args.get('searchCategory'),discountonly = request.args.get('discountonly'))}}" {%if sortMode == 'Best Match'%} style="background: #e4e4e4;" {%endif%}>Name</a>
+                        <a class="dropdown-item" href="{{url_for('main.filter',sort ='lowprice',_anchor='modellist'  ,key = request.args.get('key'),searchCategory = request.args.get('searchCategory'),discountonly = request.args.get('discountonly'))}}"   {%if sortMode == 'Low Price' %} style="background: #e4e4e4;" {%endif%}>Low Price</a>
+                        <a class="dropdown-item" href="{{url_for('main.filter',sort ='rating',_anchor='modellist'    ,key = request.args.get('key'),searchCategory = request.args.get('searchCategory'),discountonly = request.args.get('discountonly'))}}"     {%if sortMode == 'Rating'    %} style="background: #e4e4e4;" {%endif%}>Rating</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    function myFunction(sorta,keya,searchCategorya) {
+       //var urlString = window.location.host+window.location.pathname + window.location.search + window.location.hash;
+        //console.log (urlString);
+        var checkbox = document.getElementById('discountCheck');
+        var url = new URL(window.location.href);
+        url.hash="#modellist";
+        if(checkbox.checked)
+            url.searchParams.set('discountonly', checkbox.checked);
+        else
+            url.searchParams.delete('discountonly');
+
+        window.location.href = url;
+      }
+
+      function generateUrl(url, params) {
+        var i = 0, key;
+        for (key in params) {
+            if (i === 0) {
+                url += "?";
+            } else {
+                url += "&";
+            }
+            url += key;
+            url += '=';
+            url += params[key];
+            i++;
+        }
+        return url;
+    }
+    </script>
+    <div class="row card_row">
+            {% for model in models%}
+        <div class="col-auto col-sm-12 col-md-6 col-lg-3 card_col">
+            <div class="card">
+                <div class="card-body" style="padding-bottom: 0px;"><a class="card-link card-title"
+                        style="margin-bottom: 0px;" href="{{url_for('main.detail', modelID=model.id, modelName = model.name)}}">
+                        <h4>{{model.name}}</h4>
+                    </a>
+                        <div class="card-rating">
+
+                        {%- for x in range(5)-%}
+                            {%- if model.rating - x > 0 -%}
+                                <span class="fa fa-star checked"></span>
+                            {%-else-%}
+                                <span class="fa fa-star"></span>
+                            {%-endif-%}
+                        {%-endfor-%}
+
+                        <span class="review-count">
+                        <br>({{model.reviewCount}} reviews)</span>
+                        </div>
+                        <a class="card-link card-image" href="{{url_for('main.detail', modelID=model.id, modelName = model.name)}}">
+                        <img src="{{url_for('static', filename='img/cardList/'+model.image)}}">
+                    </a>
+                    <div class="d-flex align-items-center" style="height: 37px;width: 100%;">
+
+                        {% if model.discountpercent> 0 %}
+                        <h4 style="color: rgb(174,75,75);height: auto;margin-bottom: 0px;margin-right : 5px;">
+                            {{"$%.2f"|format(model.price * 0.01* (100-model.discountpercent))}}
+                        </h4>
+                        {%else%}
+                        <h4 style="color: rgb(75,174,75);height: auto;margin-bottom: 0px;margin-right : 5px;">
+                            {{"$%.2f"|format(model.price)}}
+                        </h4>
+                        {%endif%}
+
+                        {% if model.discountpercent > 0 %}
+
+                        <h6 style="color: #a2a2a2;text-decoration: line-through;height: auto;margin-bottom: 0px;margin-right : 5px;">
+                            {{"$%.2f"|format(model.price)}}
+                        </h6>
+                        <h6 style="color: #fc4545;font-size: 12px;height: auto;margin-bottom: 0px;margin-top: 3px;">
+                            -{{model.discountpercent}}%</h6>
+
+                        {%endif%}
+
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="align-self-center" style="color: rgba(41,42,44,0.89);font-size: 18px;height: 30px;margin: 0px;">
+                            {%for x in model.formatList%}
+                            {{x.name}}
+                            {%-if loop.index != model.formatList|length-%}
+                            ,
+                            {%endif%}                            
+                            {%endfor%}
+                        </p>
+                        <form class="align-items-center" method ="POST" action="{{ url_for('main.cart') }}">
+                            <input class="form-control" type="hidden" id="modelID" name="modelID" value ={{model.id}} />
+                            <button class="btn btn-link" type="submit" style="color: #404143;font-size: 22px;text-decoration: underline;">
+                                cart
+                                <i class="fa fa-shopping-cart" style="margin-left: 3px;"></i>
+                            </button>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+                {% endfor %}
+
+    </div>
+    {%endif%}
+</div>
+{%endblock%}
