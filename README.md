@@ -12,3 +12,5 @@ Backend  - Python Flask
 Database - SQLite
 
 Demo Video - https://www.youtube.com/watch?v=5IgR_YBQVSU
+
+How to run - Run app.py 
